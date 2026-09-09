@@ -162,21 +162,23 @@ button,input,select,textarea{font:inherit;color:inherit}
 .card__head .muted{font-size:11px;color:var(--ink-3);letter-spacing:.1em;text-transform:uppercase}
 .card__body{padding:16px 18px}
 
-/* badges de estado (pedidos) */
+/* badges de estado: un chip de color + ícono + palabra — se reconoce el estado
+   sin necesidad de leer, igual para pedidos y cotizaciones */
 .badge{
-  display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:600;
-  letter-spacing:.1em;text-transform:uppercase;white-space:nowrap;line-height:1.7;
+  display:inline-flex;align-items:center;gap:5px;font-size:10.5px;font-weight:700;
+  letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;line-height:1.6;
+  padding:3px 10px 3px 8px;border-radius:20px;
 }
-.badge::before{content:"";width:5px;height:5px;border-radius:50%;background:currentColor;flex:none}
-.s-nuevo{color:var(--ink-3)}
-.s-programado{color:var(--run)}
-.s-produccion{color:var(--gold)}
-.s-terminado{color:var(--ok)}
-.s-entregado{color:var(--done)}
-.s-atrasado{color:var(--crit);background:var(--crit-soft);padding:2px 8px;border-radius:20px}
+.badge .ico,.qbadge .ico{width:12px;height:12px;flex:none}
+.s-nuevo{color:var(--ink-2);background:var(--surface-3)}
+.s-programado{color:var(--run);background:var(--run-soft)}
+.s-produccion{color:var(--gold);background:var(--gold-soft)}
+.s-terminado{color:var(--ok);background:var(--ok-soft)}
+.s-entregado{color:var(--done);background:var(--done-soft)}
+.s-atrasado{color:var(--crit);background:var(--crit-soft)}
 
 /* badges de estado (cotizaciones) */
-.qbadge{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:3px 10px;border-radius:20px}
+.qbadge{display:inline-flex;align-items:center;gap:5px;font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 10px 3px 8px;border-radius:20px}
 .q-borrador{color:var(--ink-2);background:var(--surface-3)}
 .q-enviada{color:var(--run);background:var(--run-soft)}
 .q-aprobada{color:var(--ok);background:var(--ok-soft)}
@@ -196,6 +198,7 @@ button,input,select,textarea{font:inherit;color:inherit}
   padding:14px 15px 13px;text-align:left;cursor:pointer;display:flex;flex-direction:column;
 }
 .kpi:hover{background:var(--surface-2);border-color:var(--ink-3);border-bottom-color:var(--k,var(--ink-3))}
+.kpi__ico{width:22px;height:22px;color:var(--k,var(--ink-3));margin-bottom:8px;flex:none}
 .kpi__label{font-size:9.5px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-2);min-height:2.9em}
 .kpi__value{
   font-family:Fraunces,Georgia,serif;font-style:italic;color:var(--k,var(--ink));
@@ -690,6 +693,22 @@ function esc(v){ return String(v).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&l
 function nf(n){ return Number(n||0).toLocaleString("es-BO"); }
 function money(n){ return "S/."+Number(n||0).toLocaleString("es-BO",{minimumFractionDigits:2,maximumFractionDigits:2}); }
 
+/* ============ iconos: para reconocer el estado a simple vista, sin leer ============ */
+function ico(paths,cls){ return '<svg class="ico'+(cls?" "+cls:"")+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">'+paths+"</svg>"; }
+const ICN = {
+  caja:'<path d="M3 8l9-4 9 4-9 4-9-4Z"/><path d="M3 8v8l9 4 9-4V8"/><path d="M12 12v8"/>',
+  tijeras:'<circle cx="6" cy="6" r="2.1"/><circle cx="6" cy="18" r="2.1"/><path d="M7.6 7.5 20 18M7.6 16.5 20 6"/>',
+  check:'<circle cx="12" cy="12" r="9"/><path d="M8 12.3l2.6 2.6L16 9.4"/>',
+  camion:'<path d="M3 7h11v9H3z"/><path d="M14 10h4l3 3v3h-7z"/><circle cx="7" cy="18" r="1.5"/><circle cx="17.3" cy="18" r="1.5"/>',
+  alerta:'<path d="M12 4 2 20h20L12 4Z"/><path d="M12 10.3v3.6"/><circle cx="12" cy="16.6" r=".35" fill="currentColor" stroke="none"/>',
+  lapiz:'<path d="M4 20l.9-3.8L15.5 5.6l3.2 3.2L8.1 19.4 4 20Z"/>',
+  avion:'<path d="M3 12.5 21 4l-8.3 18-2-8-8-1.5Z"/>',
+  calendario:'<rect x="3" y="5" width="18" height="16" rx="2.5"/><path d="M3 10h18M8 3v4M16 3v4"/>',
+  hilo:'<circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="2"/>'
+};
+const ESTADO_ICN = { "Nuevo":ICN.hilo, "Programado":ICN.calendario, "En producción":ICN.tijeras, "Terminado":ICN.check, "Entregado":ICN.camion, "Atrasado":ICN.alerta };
+const Q_ICN = { "Borrador":ICN.lapiz, "Enviada":ICN.avion, "Aprobada":ICN.check, "Rechazada":ICN.alerta };
+
 /* ============ modelo: pedidos ============ */
 const ESTADOS = ["Nuevo","Programado","En producción","Terminado","Entregado"];
 const ORDEN_ESTADO = { "Atrasado":0, "Programado":1, "En producción":2, "Nuevo":3, "Terminado":4, "Entregado":5 };
@@ -888,8 +907,8 @@ const VIEWS = [
 const $ = s => document.querySelector(s);
 const page = $("#page");
 
-function badge(p){ const e = estadoVis(p); return '<span class="badge '+CLASE[e]+'">'+e+"</span>"; }
-function qbadge(q){ return '<span class="qbadge '+QCLASE[q.estado]+'">'+q.estado+"</span>"; }
+function badge(p){ const e = estadoVis(p); return '<span class="badge '+CLASE[e]+'">'+ico(ESTADO_ICN[e])+e+"</span>"; }
+function qbadge(q){ return '<span class="qbadge '+QCLASE[q.estado]+'">'+ico(Q_ICN[q.estado])+q.estado+"</span>"; }
 function fechaClase(p){
   if(atrasado(p)) return "row__date--late";
   const n = diasDesdeHoy(p.compromiso);
@@ -963,8 +982,8 @@ function vTablero(){
   const sem = act.filter(p => { const n = diasDesdeHoy(p.compromiso); return n >= 0 && n <= 6; });
   const late = pedidos.filter(atrasado);
   const fin = pedidos.filter(p => p.estado === "Terminado");
-  const kpi = (cls,label,val,foot,view) =>
-    '<button class="kpi '+cls+'" data-goto="'+view+'"><div class="kpi__label">'+label+'</div>'+
+  const kpi = (cls,icon,label,val,foot,view) =>
+    '<button class="kpi '+cls+'" data-goto="'+view+'">'+ico(icon,"kpi__ico")+'<div class="kpi__label">'+label+'</div>'+
     '<div class="kpi__value">'+val+'</div><div class="kpi__foot">'+foot+"</div></button>";
   const prox = act.filter(p => diasDesdeHoy(p.compromiso) >= 0).sort((a,b) => a.compromiso.localeCompare(b.compromiso)).slice(0,7);
 
@@ -976,11 +995,11 @@ function vTablero(){
 
   return ''+
   '<section class="kpis">'+
-    kpi("kpi--act","Pedidos activos", act.length, "de "+pedidos.length+" registrados","pedidos")+
-    kpi("kpi--run","En producción", prod.length, "en el taller ahora","pedidos")+
-    kpi("kpi--fin","Terminados", fin.length, "listos para entregar","semana")+
-    kpi("kpi--week","Entregas esta semana", sem.length, "próximos 7 días","semana")+
-    kpi("kpi--late","Atrasados", late.length, late.length ? "requieren acción hoy" : "todo al día","semana")+
+    kpi("kpi--act",ICN.caja,"Pedidos activos", act.length, "de "+pedidos.length+" registrados","pedidos")+
+    kpi("kpi--run",ICN.tijeras,"En producción", prod.length, "en el taller ahora","pedidos")+
+    kpi("kpi--fin",ICN.check,"Terminados", fin.length, "listos para entregar","semana")+
+    kpi("kpi--week",ICN.camion,"Entregas esta semana", sem.length, "próximos 7 días","semana")+
+    kpi("kpi--late",ICN.alerta,"Atrasados", late.length, late.length ? "requieren acción hoy" : "todo al día","semana")+
   "</section>"+
 
   '<section class="card">'+
