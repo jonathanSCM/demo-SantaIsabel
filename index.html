@@ -497,6 +497,10 @@ tbody tr.is-new td:first-child{box-shadow:inset 2px 0 0 var(--rose)}
   box-shadow:var(--shadow);padding:22px 18px;display:flex;flex-direction:column;gap:20px;position:static;
   overflow-x:hidden;
 }
+/* cada bloque de la hoja es un hijo flex directo: sin esto, una tabla ancha
+   (tela/avíos/empaque/producción, curva de tallas) fuerza al hijo a no encogerse
+   y termina empujando columnas fuera del ancho visible de la hoja */
+.sheet > *{min-width:0}
 .sheet--static{position:static}
 .sheet__head{display:flex;flex-direction:column;gap:10px}
 .sheet__brand{display:flex;flex-direction:column;gap:3px}
