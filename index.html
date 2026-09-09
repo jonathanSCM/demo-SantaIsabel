@@ -283,17 +283,19 @@ textarea.input{resize:vertical;min-height:64px;line-height:1.5}
 .row2{display:grid;grid-template-columns:1fr;gap:12px}
 @media (min-width:560px){ .row2{grid-template-columns:1fr 1fr} }
 
-/* tabla: en mobile se reemplaza por tarjetas (.cards-m), la tabla real es un progressive enhancement */
+/* tabla de pedidos: en mobile se reemplaza por tarjetas (.cards-m), la tabla real es un
+   progressive enhancement. Todo escopado a .tablewrap para que NO se filtre a otras
+   tablas de la app (la hoja de cotización usa table.sheet-t con su propio diseño). */
 .tablewrap{display:none;overflow-x:auto}
-table{border-collapse:collapse;width:100%;min-width:880px}
-th{
+.tablewrap table{border-collapse:collapse;width:100%;min-width:880px}
+.tablewrap th{
   font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);
   text-align:left;font-weight:600;padding:12px 16px;border-bottom:1px solid var(--line-2);white-space:nowrap;background:transparent;
 }
-td{padding:13px 16px;border-bottom:1px solid var(--line);font-size:13.5px;vertical-align:middle}
-tbody tr{cursor:pointer}
-tbody tr:hover td{background:var(--surface-2)}
-tbody tr:last-child td{border-bottom:0}
+.tablewrap td{padding:13px 16px;border-bottom:1px solid var(--line);font-size:13.5px;vertical-align:middle}
+.tablewrap tbody tr{cursor:pointer}
+.tablewrap tbody tr:hover td{background:var(--surface-2)}
+.tablewrap tbody tr:last-child td{border-bottom:0}
 .cell-cli{font-weight:500;font-size:14px}
 .cell-prod{color:var(--ink-3);font-size:12px;margin-top:1px}
 .cell-id{white-space:nowrap;font-size:12px}
