@@ -23,6 +23,22 @@ python -m http.server 8080
 
 Luego abrí <http://localhost:8080>.
 
+### Despliegue con Docker / Coolify
+
+El repo incluye un `Dockerfile` (nginx sirviendo `index.html` en el puerto 80).
+En Coolify: crear una aplicación → tipo **Dockerfile** → apuntar a este repo y
+branch `main` → deploy. No hace falta configurar variables de entorno ni build
+command, es un solo archivo estático.
+
+Para probarlo local:
+
+```bash
+docker build -t santa-isabel .
+docker run -p 8080:80 santa-isabel
+```
+
+Luego abrí <http://localhost:8080>.
+
 ## Qué incluye
 
 - **Tablero** — indicadores, alertas, cotizaciones pendientes, carga de los
