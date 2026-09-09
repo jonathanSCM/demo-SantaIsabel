@@ -55,7 +55,13 @@
 *,*::before,*::after{box-sizing:border-box}
 html,body{margin:0;padding:0}
 body{
-  background:var(--paper); color:var(--ink);
+  background:
+    repeating-linear-gradient(135deg,
+      color-mix(in srgb, var(--ink) 4%, transparent) 0px,
+      color-mix(in srgb, var(--ink) 4%, transparent) 1px,
+      transparent 1px, transparent 8px),
+    var(--paper);
+  color:var(--ink);
   font-family:"Work Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
   font-size:14px; line-height:1.55; -webkit-font-smoothing:antialiased;
 }
@@ -63,6 +69,7 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .disp,h1,.kpi__value,.calhead h2,.brand__name,#drawerTitle,.modal__h h2,.sheet__brand b{
   font-family:Fraunces,Georgia,serif;
 }
+.disp-i{font-style:italic}
 button,input,select,textarea{font:inherit;color:inherit}
 :focus-visible{outline:2px solid var(--rose);outline-offset:2px}
 .num{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}
@@ -85,18 +92,18 @@ button,input,select,textarea{font:inherit;color:inherit}
     flex-direction:column;gap:4px;padding:0 0 18px;position:sticky;top:0;height:100vh;
   }
 }
-.brand{padding:24px 20px 20px;margin-bottom:10px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px}
+.brand{padding:24px 20px 20px;margin-bottom:10px;border-bottom:1.5px dashed var(--line-2);display:flex;align-items:center;gap:10px}
 .brand__mark{width:26px;height:26px;flex:none;color:var(--rose)}
-.brand__name{font-size:19px;font-weight:500;letter-spacing:.002em;color:var(--ink);line-height:1.1}
+.brand__name{font-size:19px;font-weight:500;font-style:italic;letter-spacing:.002em;color:var(--ink);line-height:1.1}
 .brand__sub{font-size:9.5px;letter-spacing:.17em;text-transform:uppercase;color:var(--ink-3);margin-top:3px}
 .nav{display:flex;flex-direction:column;gap:1px;padding:8px 12px}
 .nav__btn{
   display:flex;align-items:center;gap:11px;width:100%;text-align:left;
-  padding:10px 12px;border:0;border-radius:5px;background:transparent;color:var(--ink-2);
-  font-size:13.5px;font-weight:400;cursor:pointer;
+  padding:10px 12px 10px 10px;border:0;border-left:2.5px solid transparent;border-radius:0 5px 5px 0;
+  background:transparent;color:var(--ink-2);font-size:13.5px;font-weight:400;cursor:pointer;
 }
 .nav__btn:hover{background:var(--surface-2);color:var(--ink)}
-.nav__btn[aria-current="page"]{background:var(--rose-soft);color:var(--rose-ink);font-weight:600}
+.nav__btn[aria-current="page"]{background:var(--rose-soft);color:var(--rose-ink);font-weight:600;border-left:2.5px dashed var(--rose)}
 .nav__ico{width:17px;height:17px;flex:none;stroke:currentColor;fill:none;stroke-width:1.5}
 .nav__count{
   margin-left:auto;font-family:"IBM Plex Mono",monospace;font-size:11px;
@@ -111,11 +118,11 @@ button,input,select,textarea{font:inherit;color:inherit}
 .main{min-width:0;display:flex;flex-direction:column}
 .topbar{
   position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--paper) 88%,transparent);
-  backdrop-filter:blur(10px);border-bottom:1px solid var(--line);
+  backdrop-filter:blur(10px);border-bottom:1.5px dashed var(--line-2);
   display:flex;align-items:center;gap:14px;padding:14px 15px 12px;flex-wrap:wrap;
 }
-.topbar h1{font-size:19px;font-weight:500;letter-spacing:-.015em;line-height:1.15}
-.topbar__date{font-size:10.5px;color:var(--ink-3);margin-top:5px;letter-spacing:.08em;text-transform:uppercase}
+.topbar h1{font-size:22px;font-weight:500;font-style:italic;letter-spacing:-.01em;line-height:1.1}
+.topbar__date{font-size:9.5px;color:var(--gold);margin-bottom:3px;letter-spacing:.16em;text-transform:uppercase;font-weight:600}
 .topbar__right{margin-left:auto;display:flex;gap:8px;align-items:center}
 /* en mobile, crear pedido/cotización se hace desde el FAB y los botones propios de cada vista */
 .topbar__actions{display:none;gap:8px;align-items:center}
@@ -128,8 +135,8 @@ button,input,select,textarea{font:inherit;color:inherit}
 .page{padding:16px 15px 96px;display:flex;flex-direction:column;gap:18px;max-width:1280px;width:100%}
 @media (min-width:860px){
   .topbar{padding:18px 30px 15px}
-  .topbar h1{font-size:22px}
-  .topbar__date{font-size:11px;letter-spacing:.09em}
+  .topbar h1{font-size:27px}
+  .topbar__date{font-size:10px;letter-spacing:.18em}
   .topbar__actions{display:flex}
   .page{padding:26px 30px 90px;gap:24px}
 }
@@ -150,8 +157,8 @@ button,input,select,textarea{font:inherit;color:inherit}
 .btn--danger:hover{background:var(--crit-soft);border-color:var(--crit)}
 
 .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow)}
-.card__head{display:flex;align-items:baseline;gap:11px;padding:16px 18px 13px;border-bottom:1px solid var(--line)}
-.card__head h2{font-size:14.5px;font-weight:600;letter-spacing:.005em}
+.card__head{display:flex;align-items:baseline;gap:11px;padding:16px 18px 13px;border-bottom:1.5px dashed var(--line-2)}
+.card__head h2{font-family:Fraunces,Georgia,serif;font-style:italic;font-size:15.5px;font-weight:500;letter-spacing:-.005em}
 .card__head .muted{font-size:11px;color:var(--ink-3);letter-spacing:.1em;text-transform:uppercase}
 .card__body{padding:16px 18px}
 
@@ -178,31 +185,35 @@ button,input,select,textarea{font:inherit;color:inherit}
 .prio{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
 .prio--alta{color:var(--crit)}
 
-/* banda de indicadores (mobile-first: 2 columnas, se ensancha con el viewport) */
-.kpis{
-  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;
-  background:var(--line);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow);
-}
+/* banda de indicadores: tarjetas individuales con un filo de color por categoría,
+   en vez de la típica grilla de stats con viñetas — cada número toma el color
+   de su propia categoría, como una etiqueta de hilo */
+.kpis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 .kpi:last-child{grid-column:span 2}
-.kpi{background:var(--surface);border:0;padding:14px 15px 15px;text-align:left;cursor:pointer;display:flex;flex-direction:column}
-.kpi:hover{background:var(--surface-2)}
-.kpi__label{font-size:9.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);min-height:2.9em}
-.kpi__label::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:8px;background:var(--k,var(--line-2));vertical-align:middle;position:relative;top:-1px}
-.kpi__value{font-size:29px;font-weight:500;line-height:1;margin-top:10px;letter-spacing:-.03em}
-.kpi__foot{font-size:10px;color:var(--ink-3);margin-top:10px;padding-top:8px;border-top:1px solid var(--line);letter-spacing:.04em}
+.kpi{
+  background:var(--surface);border:1px solid var(--line);border-bottom:3px solid var(--k,var(--line-2));
+  border-radius:var(--r);box-shadow:var(--shadow);
+  padding:14px 15px 13px;text-align:left;cursor:pointer;display:flex;flex-direction:column;
+}
+.kpi:hover{background:var(--surface-2);border-color:var(--ink-3);border-bottom-color:var(--k,var(--ink-3))}
+.kpi__label{font-size:9.5px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-2);min-height:2.9em}
+.kpi__value{
+  font-family:Fraunces,Georgia,serif;font-style:italic;color:var(--k,var(--ink));
+  font-size:30px;font-weight:500;line-height:1;margin-top:8px;letter-spacing:-.02em;
+}
+.kpi__foot{font-size:10px;color:var(--ink-3);margin-top:10px;padding-top:8px;border-top:1.5px dashed var(--line-2);letter-spacing:.04em}
 .kpi--run{--k:var(--gold)} .kpi--week{--k:var(--warn)} .kpi--late{--k:var(--crit)}
 .kpi--act{--k:var(--ink-2)} .kpi--fin{--k:var(--ok)}
-.kpi--late .kpi__value{color:var(--crit)}
 @media (min-width:640px){
   .kpis{grid-template-columns:repeat(3,minmax(0,1fr))}
   .kpi:last-child{grid-column:span 1}
-  .kpi__value{font-size:34px}
+  .kpi__value{font-size:33px}
 }
 @media (min-width:1080px){
   .kpis{grid-template-columns:repeat(5,minmax(0,1fr))}
   .kpi{padding:16px 18px 17px}
   .kpi__label{font-size:10px;letter-spacing:.12em}
-  .kpi__value{font-size:37px;margin-top:12px}
+  .kpi__value{font-size:36px;margin-top:10px}
   .kpi__foot{font-size:10.5px;margin-top:11px;padding-top:9px;letter-spacing:.05em}
 }
 
@@ -219,8 +230,11 @@ button,input,select,textarea{font:inherit;color:inherit}
 .alert__txt{font-size:13.5px;line-height:1.5;min-width:0}
 .alert__txt b{font-weight:600}
 .alert__meta{display:block;font-size:11.5px;color:var(--ink-3);margin-top:2px;letter-spacing:.02em}
-.empty{padding:26px 18px;color:var(--ink-3);font-size:13px;text-align:center;letter-spacing:.04em;display:flex;flex-direction:column;align-items:center;gap:9px}
-.empty::before{content:"";width:22px;height:1px;background:var(--line-2)}
+.empty{padding:26px 18px;color:var(--ink-3);font-size:13px;text-align:center;letter-spacing:.04em;display:flex;flex-direction:column;align-items:center;gap:10px}
+.empty::before{
+  content:"";width:46px;height:14px;display:block;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 46 14'%3E%3Cline x1='0' y1='7' x2='16' y2='7' stroke='%239C9088' stroke-width='1.4' stroke-dasharray='3 3'/%3E%3Ccircle cx='23' cy='7' r='3.4' fill='none' stroke='%239C9088' stroke-width='1.4'/%3E%3Cline x1='30' y1='7' x2='46' y2='7' stroke='%239C9088' stroke-width='1.4' stroke-dasharray='3 3'/%3E%3C/svg%3E") center/contain no-repeat;
+}
 
 /* carga por fecha */
 .load{display:flex;gap:5px;align-items:flex-end;overflow-x:auto;padding:6px 0 2px}
@@ -607,7 +621,7 @@ table.sheet-t td.r,table.sheet-t th.r{text-align:right;font-family:"IBM Plex Mon
 
   <div class="main">
     <header class="topbar">
-      <div><h1 id="viewTitle">Tablero</h1><div class="topbar__date" id="todayLabel"></div></div>
+      <div><div class="topbar__date" id="todayLabel"></div><h1 id="viewTitle">Tablero</h1></div>
       <div class="topbar__right">
         <div class="topbar__actions">
           <button class="btn btn--ghost btn--sm" id="btnNewQuote">+ Cotización</button>
